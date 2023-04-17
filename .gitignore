@@ -1,0 +1,7 @@
+*.pt
+/bin
+/include
+/labels
+/lib
+/share
+/simple_images
