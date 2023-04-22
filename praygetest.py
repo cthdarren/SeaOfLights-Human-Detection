@@ -11,7 +11,7 @@ model = YOLO("yolov8n-pose.pt")
 # positions of balls in order (in the snake-like pattern) converted to
 # matrix format in the direction the camera is facing
 ballPos = [[25-x, 16+x, 15-x, 6+x, 5-x] for x in range(5)]
-servoPos = [200]*25
+servoPos = [150]*25
 # color = [[169,255,180]*25]
 # global color
 # nocolor = [item for sublist in generate for item in sublist]
@@ -50,9 +50,9 @@ def translateCoordToBallPos(coord):
        return ballPos[coord[0]-1][coord[1]-1]
 
 def servoPositions(coordList):
-    positions = [200 for x in range(25)]
+    positions = [150 for x in range(25)]
     if coordList == []:
-        return [200 for x in range(25)]
+        return [150 for x in range(25)]
     for coord in coordList:
         mainPos = translateCoordToBallPos(coord) 
         surroundingPos = []
@@ -90,7 +90,7 @@ def servoPositions(coordList):
 
 def mergePositions(combinedList):
     if len(combinedList) == 0:
-        return [200]*25
+        return [150]*25
     resultList = combinedList[0]
     for positionLists in combinedList[1:]:
         for i, position in enumerate(positionLists):
@@ -115,6 +115,7 @@ while cap.isOpened():
         for result in results:
             kp = result.keypoints
             try:
+                print(kp)
                 for person in kp:
                     coordList = []
                     left_foot = person[-1][0], person[-1][1]
@@ -161,6 +162,7 @@ while cap.isOpened():
     else:
         # Break the loop if the end of the video is reached
         break
+thr1.join()
 # Use PySerial to talk to serial ports.
 # On *nix, this will be /dev/<something>
 
